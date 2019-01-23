@@ -1,30 +1,23 @@
 #ifndef JBLGO2DRIVER_H
 #define JBLGO2DRIVER_H
-
 #include <QObject>
-#include <QThread>
-#include <QProcess>
-#include <QVector>
 
-class JBLGO2driver : public QThread
+#include <QProcess>
+#include <QTimer>
+
+class JBLGO2driver : public QObject
 {
     Q_OBJECT
 public:
     JBLGO2driver();
     ~JBLGO2driver();
-    void play(QString file_name);
-
-protected:
-    virtual void run();
+    void stream_to_speaker(QString file_name);
+    void stop_stream();
+    bool is_ready();
 
 private:
     QProcess* m_player;
-    bool m_is_running;
-    bool m_is_ready;
-    QVector<QString> m_queue;
-signals:
-
-public slots:
+    QTimer* m_speaker_inactivity;
 
 };
 

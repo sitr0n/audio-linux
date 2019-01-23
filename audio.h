@@ -1,22 +1,26 @@
 #ifndef AUDIO_H
 #define AUDIO_H
-
 #include <QObject>
+
+#include <QVector>
+#include <QTimer>
 #include <jblgo2driver.h>
 
-class Audio
+class Audio : public QObject
 {
-    //Q_OBJECT
+    Q_OBJECT
 public:
     Audio();
-    void play();
+    ~Audio();
+    void play(QString file_name);
+    void queue(QString file_name);
+    void stop();
+    void skip();
 
 private:
-    JBLGO2driver speaker;
-
-signals:
-
-public slots:
+    QVector<QString> m_queue;
+    QTimer* m_ticker;
+    JBLGO2driver m_driver;
 };
 
 #endif // AUDIO_H
